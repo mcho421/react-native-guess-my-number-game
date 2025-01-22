@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { View, Text, StyleSheet, Alert } from "react-native";
 
 import NumberContainer from "../components/game/NumberContainer";
@@ -15,13 +15,13 @@ function generateRandomBetween(min, max, exclude) {
   }
 }
 
-let minBoundary = 1;
-let maxBoundary = 100;
-
 function GameScreen({ userNumber }) {
+  const minBoundary = useRef(1);
+  const maxBoundary = useRef(100);
+
   const initialGuess = generateRandomBetween(
-    minBoundary,
-    maxBoundary,
+    minBoundary.current,
+    maxBoundary.current,
     userNumber
   );
   const [currentGuess, setCurrentGuess] = useState(initialGuess);
@@ -38,13 +38,13 @@ function GameScreen({ userNumber }) {
       return;
     }
     if (direction === "lower") {
-      maxBoundary = currentGuess;
+      maxBoundary.current = currentGuess;
     } else {
-      minBoundary = currentGuess + 1;
+      minBoundary.current = currentGuess + 1;
     }
     const newRndNumber = generateRandomBetween(
-      minBoundary,
-      maxBoundary,
+      minBoundary.current,
+      maxBoundary.current,
       currentGuess
     );
     setCurrentGuess(newRndNumber);
