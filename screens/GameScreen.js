@@ -52,7 +52,7 @@ function GameScreen({ userNumber, onGameOver }) {
     setCurrentGuess(newRndNumber);
     setGuessRounds((prevGuessRounds) => [newRndNumber, ...prevGuessRounds]);
     if (newRndNumber === userNumber) {
-      onGameOver();
+      onGameOver(guessRounds.length + 1);
     }
   }
 
